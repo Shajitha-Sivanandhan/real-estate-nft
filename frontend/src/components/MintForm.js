@@ -7,8 +7,15 @@ const MintForm = () => {
   const [desc, setDesc] = useState("");
   const [cid, setCid] = useState("");
   const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleMint = async () => {
+    if (!name || !desc || !cid) {
+      setStatus("❌ All fields are required.");
+      return;
+    }
+
+    setLoading(true);
     setStatus("⏳ Minting in progress...");
 
     try {
@@ -20,16 +27,18 @@ const MintForm = () => {
       };
 
       const res = await axios.post("http://localhost:5055/uploadMetadata", metadata);
-      const tokenURI = res.data.uri;
+      const tokenURI = res?.data?.uri;
+      if (!tokenURI) throw new Error("tokenURI not received from server");
 
       const contract = await getContract();
-      window.debugContract = contract;
+      window.debugContract = contract; // ✅ DEBUG HELPER
 
       const signerAddress = await contract.signer.getAddress();
       console.log("👀 Minting to:", signerAddress);
       console.log("📦 tokenURI:", tokenURI);
 
       const tx = await contract.mintPropertyNFT(signerAddress, tokenURI);
+      console.log("📤 Transaction sent. Waiting for confirmation...");
       const receipt = await tx.wait();
 
       const tokenId = receipt?.events?.[0]?.args?.tokenId?.toString();
@@ -39,21 +48,15 @@ const MintForm = () => {
       setStatus(`✅ NFT Minted! Token ID: ${tokenId} | TxHash: ${tx.hash}`);
     } catch (err) {
       console.error("❌ Minting error:", err);
-      setStatus("❌ Minting failed. Check console and try again.");
+      setStatus(`❌ Minting failed: ${err.message || "Unknown error"}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{
-      marginTop: "2rem",
-      padding: "1.5rem",
-      backgroundColor: "#fafafa",
-      borderRadius: "12px",
-      border: "1px solid #e0e0e0",
-      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)"
-    }}>
+    <div style={containerStyle}>
       <h2>🧾 Mint Property NFT</h2>
-
       <input
         type="text"
         placeholder="Property Name"
@@ -74,15 +77,23 @@ const MintForm = () => {
         onChange={(e) => setCid(e.target.value)}
         style={inputStyle}
       />
-      <button onClick={handleMint} style={buttonStyle}>
-        Mint NFT
+      <button onClick={handleMint} style={buttonStyle} disabled={loading}>
+        {loading ? "Minting..." : "Mint NFT"}
       </button>
-
       <p style={{ color: status.startsWith("❌") ? "red" : "green", marginTop: "1rem" }}>
         {status}
       </p>
     </div>
   );
+};
+
+const containerStyle = {
+  marginTop: "2rem",
+  padding: "1.5rem",
+  backgroundColor: "#fafafa",
+  borderRadius: "12px",
+  border: "1px solid #e0e0e0",
+  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)"
 };
 
 const inputStyle = {
