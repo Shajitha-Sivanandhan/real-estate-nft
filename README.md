@@ -36,7 +36,7 @@ A decentralized dApp for minting, viewing, and transferring real estate ownershi
 <img width="1434" alt="Screenshot 2025-06-16 at 9 37 11 PM" src="https://github.com/user-attachments/assets/a9e8ce94-c63c-44a4-8e76-a81966c92087" />
 
 
-###  Tranfer done
+###  Transfer done
 <img width="1434" alt="Screenshot 2025-06-16 at 9 37 24 PM" src="https://github.com/user-attachments/assets/435464c1-54be-4628-a0af-13c5b6e7090b" />
 
 
