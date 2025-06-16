@@ -1,0 +1,44 @@
+{
+    "name": "123 Main Street, Anytown USA",
+    "description": "A charming 3-bedroom home in the heart of Anytown, featuring a spacious backyard and updated kitchen.",
+    "image": "ipfs://Qmc67Hsy1GTPYFRhPdYCF2dybQSu69mGdc8wRTaQtK3Lvw",
+    "background_color": "FFFFFF",
+    "attributes": [
+      {
+        "trait_type": "Bedrooms",
+        "value": 3
+      },
+      {
+        "trait_type": "Bathrooms",
+        "value": 2
+      },
+      {
+        "trait_type": "Square Footage",
+        "value": 1500
+      },
+      {
+        "trait_type": "Year Built",
+        "value": 1985
+      },
+      {
+        "trait_type": "Property Type",
+        "value": "Single Family Home"
+      },
+      {
+        "trait_type": "Lot Size (Acres)",
+        "value": 0.25
+      },
+      {
+        "trait_type": "Parking Spaces",
+        "value": 2
+      },
+      {
+        "trait_type": "HOA Fees",
+        "value": "$100/month"
+      },
+      {
+        "trait_type": "Taxes (Annual)",
+        "value": "$3000"
+      }
+    ]
+  }
